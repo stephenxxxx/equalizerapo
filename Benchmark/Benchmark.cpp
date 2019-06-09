@@ -35,6 +35,7 @@
 #include "helpers/StringHelper.h"
 #include "helpers/PrecisionTimer.h"
 #include "helpers/MemoryHelper.h"
+#include "helpers/VSTBridgeManager.h"
 
 using namespace std;
 
@@ -68,6 +69,9 @@ int main(int argc, char** argv)
 
 		bool verbose = verboseArg.getValue();
 		LogHelper::set(stderr, verbose, true, true);
+		// VSTBridgeManager::start();
+		// return 0;
+
 #ifdef _DEBUG
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		// _CrtSetBreakAlloc(3318);

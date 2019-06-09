@@ -20,6 +20,7 @@
 #include "stdafx.h"
 #include "RegistryHelper.h"
 #include "LogHelper.h"
+#include "VSTBridgeManager.h"
 #include "VSTPluginLibrary.h"
 
 using namespace std;
@@ -58,9 +59,42 @@ wstring VSTPluginLibrary::getDefaultPluginPath()
 	return defaultPluginPath;
 }
 
+VSTPluginLibrary::~VSTPluginLibrary()
+{
+	if (libraryId != -1)
+		VSTBridgeManager::unloadLibrary(libraryId);
+}
+
+int VSTPluginLibrary::initialize()
+{
+	if (libraryId != -1)
+		return ALREADY_LOADED;
+
+	int result = AbstractLibrary::initialize();
+#ifdef _WIN64
+	if (result == WRONG_ARCHITECTURE)
+	{
+		result = VSTBridgeManager::loadLibrary(libPath);
+
+		if (result >= 0)
+		{
+			libraryId = result;
+			result = LOADING_SUCCESSFUL;
+		}
+	}
+#endif
+
+	return result;
+}
+
 std::wstring VSTPluginLibrary::getLibPath()
 {
 	return libPath;
+}
+
+int VSTPluginLibrary::getLibraryId()
+{
+	return libraryId;
 }
 
 bool VSTPluginLibrary::loadFunctions()

@@ -27,6 +27,7 @@
 #include <windows.h>
 #include "helpers/aeffectx.h"
 #include "helpers/StringHelper.h"
+#include "helpers/MemoryHelper.h"
 #include "Editor/helpers/DPIHelper.h"
 #include "Editor/MainWindow.h"
 #include "VSTPluginFilterGUIDialog.h"
@@ -61,7 +62,8 @@ VSTPluginFilterGUI::~VSTPluginFilterGUI()
 	{
 		if (embedded)
 			on_embedAction_toggled(false);
-		delete effect;
+		effect->~VSTPluginInstance();
+		MemoryHelper::free(effect);
 		effect = NULL;
 	}
 
@@ -192,7 +194,7 @@ void VSTPluginFilterGUI::initPlugin()
 		}
 		else
 		{
-			effect = new VSTPluginInstance(library, 1);
+			effect = VSTPluginInstance::createInstance(library, 1);
 			if (effect->initialize())
 			{
 				effect->setLanguage(QLocale().language() == QLocale::German ? 2 : 1);
@@ -203,7 +205,8 @@ void VSTPluginFilterGUI::initPlugin()
 			}
 			else
 			{
-				delete effect;
+				effect->~VSTPluginInstance();
+				MemoryHelper::free(effect);
 				effect = NULL;
 
 				color = Qt::red;
@@ -229,7 +232,8 @@ void VSTPluginFilterGUI::on_pathLineEdit_editingFinished()
 			oldId = effect->uniqueID();
 			if (ui->embedAction->isChecked())
 				on_embedAction_toggled(false);
-			delete effect;
+			effect->~VSTPluginInstance();
+			MemoryHelper::free(effect);
 			effect = NULL;
 		}
 

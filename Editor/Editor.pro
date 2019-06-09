@@ -132,8 +132,12 @@ SOURCES += main.cpp\
 	../filters/loudnessCorrection/VolumeController.cpp \
 	guis/LoudnessCorrectionFilterGUIDialog.cpp \
 	helpers/QtSndfileHandle.cpp \
-    widgets/MiddleClickTabWidget.cpp \
-    widgets/MiddleClickTabBar.cpp
+	widgets/MiddleClickTabWidget.cpp \
+	widgets/MiddleClickTabBar.cpp \
+	../helpers/BufferedSocket.cpp \
+	../helpers/RemoteVSTPluginInstance.cpp \
+	../helpers/VSTBridgeManager.cpp \
+	../helpers/VSTBridgePluginInstance.cpp
 
 HEADERS  += \
 	../helpers/LogHelper.h \
@@ -255,8 +259,11 @@ HEADERS  += \
 	../filters/loudnessCorrection/VolumeController.h \
 	guis/LoudnessCorrectionFilterGUIDialog.h \
 	helpers/QtSndfileHandle.h \
-    widgets/MiddleClickTabWidget.h \
-    widgets/MiddleClickTabBar.h
+	widgets/MiddleClickTabWidget.h \
+	widgets/MiddleClickTabBar.h \
+	../helpers/BufferedSocket.h \
+	../helpers/RemoteVSTPluginInstance.h \
+	../helpers/VSTBridgeManager.h
 
 FORMS    += \
 	guis/PreampFilterGUI.ui \
@@ -281,7 +288,7 @@ FORMS    += \
 	guis/LoudnessCorrectionFilterGUIDialog.ui
 
 INCLUDEPATH += $$PWD/.. "C:/Program Files/libsndfile/include" "C:/Program Files/fftw3" "C:/Program Files/muparserx_v3_0_1/parser"
-LIBS += user32.lib advapi32.lib version.lib ole32.lib Shlwapi.lib authz.lib crypt32.lib dbghelp.lib winmm.lib libsndfile-1.lib libfftw3f-3.lib
+LIBS += user32.lib advapi32.lib version.lib ole32.lib Shlwapi.lib authz.lib crypt32.lib dbghelp.lib Ws2_32.lib winmm.lib libsndfile-1.lib libfftw3f-3.lib
 
 build_pass:CONFIG(debug, debug|release) {
 	LIBS += muparserxd.lib

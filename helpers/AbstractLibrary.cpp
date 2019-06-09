@@ -74,10 +74,10 @@ int AbstractLibrary::initialize()
 
 		TraceF(L"Loaded library %s", libPath.c_str());
 
-		return 1;
+		return LOADING_SUCCESSFUL;
 	}
 
-	return 0;
+	return ALREADY_LOADED;
 }
 
 int AbstractLibrary::customInitialize()

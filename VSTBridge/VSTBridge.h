@@ -1,4 +1,4 @@
-/*
+﻿/*
     This file is part of Equalizer APO, a system-wide equalizer.
     Copyright (C) 2017  Jonas Thedering
 
@@ -19,26 +19,18 @@
 
 #pragma once
 
-#include <string>
-#include <cstdio>
+#include <vector>
+#include <memory>
+#include "helpers/VSTPluginLibrary.h"
+#include "helpers/VSTBridgePluginInstance.h"
 
-#define TraceF(format, ...) LogHelper::log(__FILE__, __LINE__, this, true, format, __VA_ARGS__)
-#define TraceFStatic(format, ...) LogHelper::log(__FILE__, __LINE__, NULL, true, format, __VA_ARGS__)
-#define LogF(format, ...) LogHelper::log(__FILE__, __LINE__, this, false, format, __VA_ARGS__)
-#define LogFStatic(format, ...) LogHelper::log(__FILE__, __LINE__, NULL, false, format, __VA_ARGS__)
-
-class LogHelper
+class VSTBridge
 {
 public:
-	static void log(const char* file, int line, const void* caller, bool trace, const wchar_t* format, ...);
-	static void reset();
-	static void set(FILE* fp, bool enableTrace, bool compact, bool useConsoleColors);
+	void run(int port);
 
 private:
-	static bool initialized;
-	static std::wstring logPath;
-	static bool enableTrace;
-	static FILE* presetFP;
-	static bool compact;
-	static bool useConsoleColors;
+	std::vector<std::shared_ptr<VSTPluginLibrary> > libraries;
+	int libraryCount = 0;
+	std::vector<VSTBridgePluginInstance*> effects;
 };

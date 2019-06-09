@@ -20,10 +20,14 @@
 #pragma once
 
 #include <string>
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 
 class AbstractLibrary
 {
 public:
+	static const int LOADING_SUCCESSFUL = 1;
+	static const int ALREADY_LOADED = 0;
 	static const int FILE_NOT_FOUND = -1;
 	static const int LOADING_FAILED = -2;
 	static const int FUNCTIONS_MISSING = -3;
@@ -31,7 +35,7 @@ public:
 
 	virtual ~AbstractLibrary();
 
-	int initialize();
+	virtual int initialize();
 	virtual std::wstring getLibPath() = 0;
 
 protected:

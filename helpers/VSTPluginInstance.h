@@ -29,36 +29,36 @@ class VSTPluginLibrary;
 class VSTPluginInstance
 {
 public:
-	VSTPluginInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel);
-	~VSTPluginInstance();
+	static VSTPluginInstance* createInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel);
+	virtual ~VSTPluginInstance();
 
-	bool initialize();
+	virtual bool initialize();
 
-	int numInputs() const;
-	int numOutputs() const;
-	bool canReplacing() const;
-	int uniqueID() const;
-	std::wstring getName() const;
+	virtual int numInputs() const;
+	virtual int numOutputs() const;
+	virtual bool canReplacing() const;
+	virtual int uniqueID() const;
+	virtual std::wstring getName() const;
 	int getUsedChannelCount() const;
-	void setUsedChannelCount(int count);
+	virtual void setUsedChannelCount(int count);
 	float getSampleRate() const;
 	int getProcessLevel() const;
 	void setProcessLevel(int value);
 	int getLanguage() const;
 	void setLanguage(int value);
 
-	void prepareForProcessing(float sampleRate, int blockSize);
-	void writeToEffect(const std::wstring& chunkData, const std::unordered_map<std::wstring, float>& paramMap);
-	void readFromEffect(std::wstring& chunkData, std::unordered_map<std::wstring, float>& paramMap) const;
+	virtual void prepareForProcessing(float sampleRate, int blockSize);
+	virtual void writeToEffect(const std::wstring& chunkData, const std::unordered_map<std::wstring, float>& paramMap);
+	virtual void readFromEffect(std::wstring& chunkData, std::unordered_map<std::wstring, float>& paramMap) const;
 
-	void startProcessing();
-	void processReplacing(float** inputArray, float** outputArray, int frameCount);
-	void process(float** inputArray, float** outputArray, int frameCount);
-	void stopProcessing();
+	virtual void startProcessing();
+	virtual void processReplacing(float** inputArray, float** outputArray, int frameCount);
+	virtual void process(float** inputArray, float** outputArray, int frameCount);
+	virtual void stopProcessing();
 
-	void startEditing(HWND hWnd, short* width, short* height);
-	void doIdle();
-	void stopEditing();
+	virtual void startEditing(HWND hWnd, short* width, short* height);
+	virtual void doIdle();
+	virtual void stopEditing();
 
 	void setAutomateFunc(std::function<void()> func);
 	void onAutomate();
@@ -66,9 +66,12 @@ public:
 	void setSizeWindowFunc(std::function<void(int, int)> func);
 	void onSizeWindow(int w, int h);
 
-private:
+protected:
+	VSTPluginInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel);
 	std::shared_ptr<VSTPluginLibrary> library;
-	AEffect* effect;
+
+private:
+	AEffect* effect = NULL;
 	std::function<void()> automateFunc;
 	std::function<void(int, int)> sizeWindowFunc;
 	float sampleRate = 0.0f;

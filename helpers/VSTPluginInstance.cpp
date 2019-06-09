@@ -20,9 +20,11 @@
 #include "stdafx.h"
 #include <wincrypt.h>
 #include "StringHelper.h"
+#include "MemoryHelper.h"
 #include "version.h"
 #include "VSTPluginLibrary.h"
 #include "VSTPluginInstance.h"
+#include "RemoteVSTPluginInstance.h"
 
 using namespace std;
 
@@ -118,9 +120,18 @@ static intptr_t callback(AEffect* effect, int32_t opcode, int32_t index, intptr_
 	return 0;
 }
 
-VSTPluginInstance::VSTPluginInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel)
-	: library(library), processLevel(processLevel)
+VSTPluginInstance* VSTPluginInstance::createInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel)
 {
+	if (library->getLibraryId() == -1)
+	{
+		void* mem = MemoryHelper::alloc(sizeof(VSTPluginInstance));
+		return new(mem) VSTPluginInstance(library, processLevel);
+	}
+	else
+	{
+		void* mem = MemoryHelper::alloc(sizeof(RemoteVSTPluginInstance));
+		return new(mem) RemoteVSTPluginInstance(library, processLevel);
+	}
 }
 
 VSTPluginInstance::~VSTPluginInstance()
@@ -240,10 +251,11 @@ void VSTPluginInstance::setLanguage(int value)
 
 void VSTPluginInstance::prepareForProcessing(float sampleRate, int blockSize)
 {
+	this->sampleRate = sampleRate;
+
 	if (effect == NULL)
 		return;
 
-	this->sampleRate = sampleRate;
 	effect->dispatcher(effect, effSetSampleRate, 0, 0, NULL, sampleRate);
 	effect->dispatcher(effect, effSetBlockSize, 0, blockSize, NULL, 0.0f);
 }
@@ -394,4 +406,9 @@ void VSTPluginInstance::onSizeWindow(int w, int h)
 {
 	if (sizeWindowFunc)
 		sizeWindowFunc(w, h);
+}
+
+VSTPluginInstance::VSTPluginInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel)
+	: library(library), processLevel(processLevel)
+{
 }

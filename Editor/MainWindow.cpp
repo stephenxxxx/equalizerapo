@@ -1005,6 +1005,7 @@ void MainWindow::loadPreferences()
 
 	ui->startFromComboBox->setCurrentIndex(settings.value("analysis/startFrom").toInt());
 	ui->analysisChannelComboBox->setCurrentText(settings.value("analysis/channel").toString());
+	int index = ui->analysisChannelComboBox->currentIndex();
 	ui->resolutionSpinBox->setValue(settings.value("analysis/resolution", 65536).toInt());
 	double zoomX = DPIHelper::scaleZoom(settings.value("analysis/zoomX", 1.0).toDouble());
 	double zoomY = DPIHelper::scaleZoom(settings.value("analysis/zoomY", 1.0).toDouble());

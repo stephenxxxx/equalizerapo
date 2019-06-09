@@ -1,6 +1,6 @@
 /*
-    This file is part of EqualizerAPO, a system-wide equalizer.
-    Copyright (C) 2013  Jonas Thedering
+    This file is part of Equalizer APO, a system-wide equalizer.
+    Copyright (C) 2017  Jonas Thedering
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ public:
 	static std::wstring replaceCharacters(const std::wstring& s, const std::wstring& chars, const std::wstring& replacement);
 	static std::wstring replaceIllegalCharacters(const std::wstring& filename);
 	static std::wstring toWString(const std::string& s, unsigned codepage);
+	static std::string toString(const std::wstring& s, unsigned codepage);
 	static std::wstring toLowerCase(const std::wstring& s);
 	static std::wstring toUpperCase(const std::wstring& s);
 	static std::wstring trim(const std::wstring& s);
@@ -36,4 +37,6 @@ public:
 	static std::wstring join(const std::vector<std::wstring>& strings, const std::wstring& separator);
 	static std::wstring getSystemErrorString(long status);
 	static std::vector<std::wstring> splitQuoted(const std::wstring& s, wchar_t splitChar, wchar_t quoteChar = '"');
+	static bool endsWith(const std::wstring& s, const std::wstring& suffix);
+	static std::wstring replaceSuffix(const std::wstring& s, const std::wstring& suffix, const std::wstring& replacement);
 };

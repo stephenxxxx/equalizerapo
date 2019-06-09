@@ -1,6 +1,6 @@
 /*
-    This file is part of EqualizerAPO, a system-wide equalizer.
-    Copyright (C) 2012  Jonas Thedering
+    This file is part of Equalizer APO, a system-wide equalizer.
+    Copyright (C) 2017  Jonas Thedering
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

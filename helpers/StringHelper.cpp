@@ -1,6 +1,6 @@
 /*
-    This file is part of EqualizerAPO, a system-wide equalizer.
-    Copyright (C) 2013  Jonas Thedering
+    This file is part of Equalizer APO, a system-wide equalizer.
+    Copyright (C) 2017  Jonas Thedering
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ wstring StringHelper::replaceCharacters(const wstring& s, const wstring& chars, 
 
 wstring StringHelper::replaceIllegalCharacters(const wstring& filename)
 {
-	return replaceCharacters(filename, L"<>:\"/\\|?*", L"_");
+	return replaceCharacters(filename, L"<>:\"/\\|?*\r\n", L"_");
 }
 
 wstring StringHelper::toWString(const string& s, unsigned codepage)
@@ -54,6 +54,17 @@ wstring StringHelper::toWString(const string& s, unsigned codepage)
 	wchar_t* charBuf = new wchar_t[length];
 	MultiByteToWideChar(codepage, 0, s.c_str(), -1, charBuf, length);
 	wstring result = charBuf;
+	delete charBuf;
+
+	return result;
+}
+
+std::string StringHelper::toString(const std::wstring& s, unsigned codepage)
+{
+	int length = WideCharToMultiByte(codepage, 0, s.c_str(), -1, NULL, 0, NULL, NULL);
+	char* charBuf = new char[length];
+	WideCharToMultiByte(codepage, 0, s.c_str(), -1, charBuf, length, NULL, NULL);
+	string result = charBuf;
 	delete charBuf;
 
 	return result;
@@ -194,6 +205,26 @@ vector<wstring> StringHelper::splitQuoted(const wstring& s, wchar_t splitChar, w
 
 	if (current != L"")
 		result.push_back(current);
+
+	return result;
+}
+
+bool StringHelper::endsWith(const std::wstring& s, const std::wstring& suffix)
+{
+	if (s.length() < suffix.length())
+		return false;
+
+	return s.substr(s.length() - suffix.length()) == suffix;
+}
+
+std::wstring StringHelper::replaceSuffix(const std::wstring& s, const std::wstring& suffix, const std::wstring& replacement)
+{
+	std::wstring result;
+
+	if (endsWith(s, suffix))
+		result = (s.substr(0, s.length() - suffix.length()) + replacement);
+	else
+		result = s;
 
 	return result;
 }

@@ -169,6 +169,7 @@
     <ClInclude Include="filters\VSTPluginFilterFactory.h" />
     <ClInclude Include="helpers\AbstractLibrary.h" />
     <ClInclude Include="helpers\aeffectx.h" />
+    <ClInclude Include="helpers\BufferedSocket.h" />
     <ClInclude Include="helpers\ChannelHelper.h" />
     <ClInclude Include="helpers\GainIterator.h" />
     <ClInclude Include="helpers\LogHelper.h" />
@@ -177,6 +178,8 @@
     <ClInclude Include="helpers\ScopeGuard.h" />
     <ClInclude Include="helpers\StringHelper.h" />
     <ClInclude Include="helpers\UncaughtExceptions.h" />
+    <ClInclude Include="helpers\VSTBridgeManager.h" />
+    <ClInclude Include="helpers\RemoteVSTPluginInstance.h" />
     <ClInclude Include="helpers\VSTPluginInstance.h" />
     <ClInclude Include="helpers\VSTPluginLibrary.h" />
     <ClInclude Include="IFilter.h" />
@@ -221,11 +224,14 @@
     <ClCompile Include="filters\VSTPluginFilter.cpp" />
     <ClCompile Include="filters\VSTPluginFilterFactory.cpp" />
     <ClCompile Include="helpers\AbstractLibrary.cpp" />
+    <ClCompile Include="helpers\BufferedSocket.cpp" />
     <ClCompile Include="helpers\ChannelHelper.cpp" />
     <ClCompile Include="helpers\GainIterator.cpp" />
     <ClCompile Include="helpers\LogHelper.cpp" />
     <ClCompile Include="helpers\RegistryHelper.cpp" />
     <ClCompile Include="helpers\StringHelper.cpp" />
+    <ClCompile Include="helpers\VSTBridgeManager.cpp" />
+    <ClCompile Include="helpers\RemoteVSTPluginInstance.cpp" />
     <ClCompile Include="helpers\VSTPluginInstance.cpp" />
     <ClCompile Include="helpers\VSTPluginLibrary.cpp" />
     <ClCompile Include="IFilter.cpp" />

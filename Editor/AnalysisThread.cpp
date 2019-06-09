@@ -155,6 +155,9 @@ void AnalysisThread::run()
 			channelMask = KSAUDIO_SPEAKER_7POINT1_SURROUND;
 		}
 
+//		if (channelIndex < 0 || channelIndex >= (int)channelCount)
+//			channelIndex = 0;
+
 		unsigned sampleRate = device->getSampleRate();
 		if (sampleRate == 0)
 			sampleRate = 48000;

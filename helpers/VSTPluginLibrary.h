@@ -33,7 +33,11 @@ public:
 	static std::shared_ptr<VSTPluginLibrary> getInstance(const std::wstring& libPath);
 	static std::wstring getDefaultPluginPath();
 
+	~VSTPluginLibrary();
+
+	int initialize() override;
 	std::wstring getLibPath() override;
+	int getLibraryId();
 
 	typedef AEffect* (* vstPluginMain)(audioMasterCallback audioMaster);
 	vstPluginMain VSTPluginMain;
@@ -46,4 +50,5 @@ private:
 	static std::unordered_map<std::wstring, std::weak_ptr<VSTPluginLibrary> > instanceMap;
 	static std::wstring defaultPluginPath;
 	std::wstring libPath;
+	int libraryId = -1;
 };

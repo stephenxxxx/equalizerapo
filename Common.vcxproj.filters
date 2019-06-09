@@ -141,6 +141,15 @@
     <ClInclude Include="filters\loudnessCorrection\LoudnessCorrectionFilter.h">
       <Filter>filters\loudnessCorrection</Filter>
     </ClInclude>
+    <ClInclude Include="helpers\VSTBridgeManager.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\BufferedSocket.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\RemoteVSTPluginInstance.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -266,6 +275,15 @@
     </ClCompile>
     <ClCompile Include="filters\loudnessCorrection\LoudnessCorrectionFilter.cpp">
       <Filter>filters\loudnessCorrection</Filter>
+    </ClCompile>
+    <ClCompile Include="helpers\VSTBridgeManager.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="helpers\BufferedSocket.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="helpers\RemoteVSTPluginInstance.cpp">
+      <Filter>helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
